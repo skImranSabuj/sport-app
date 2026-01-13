@@ -10,7 +10,7 @@ function MatchCard({ match }: Props) {
   const now = useNowTick(1000);
   const startMs = new Date(match.startTimeISO).getTime();
 
-  const { label } = useMemo(() => {
+  const { label: startTime } = useMemo(() => {
     const formatTime = new Date(match.startTimeISO).toLocaleTimeString([], {
       hour: '2-digit',
       minute: '2-digit',
@@ -70,7 +70,10 @@ function MatchCard({ match }: Props) {
 
         {/* Time */}
         <View style={{ alignItems: 'center', width: 80 }}>
-          <Text style={{ fontSize: 16, fontWeight: '700' }}>{label}</Text>
+          <Text style={{ fontFamily: 'bold-font', fontSize: 20, fontWeight:'700' }}>
+            {startTime}
+          </Text>
+
           {match.hasTips && (
             <View
               style={{
