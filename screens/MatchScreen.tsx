@@ -25,9 +25,6 @@ export default function MatchListScreen() {
     isFetchingNextPage,
     refetch,
   } = useMatchList();
-  console.log("====================================");
-  console.log(data.length);
-  console.log("====================================");
   if (isLoading && !data?.length) return <EmptyState variant="loading" />;
   if (isError) return <ErrorState onRetry={refetch} />;
 
