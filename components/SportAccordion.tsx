@@ -79,18 +79,39 @@ export default function SportAccordion({ sport }: Props) {
 
       {/* Expanded */}
       {expanded && (
-        <View style={{ paddingHorizontal: Spacing[3] }}>
-          <TextInput
-            placeholder="Search leagues"
-            value={draftSportSearch[sport.id] ?? ""}
-            onChangeText={(text) => setDraftSportSearch(sport.id, text)}
+        <View
+          style={{ paddingHorizontal: Spacing[3], paddingBottom: Spacing[2] }}
+        >
+          <View
             style={{
+              flexDirection: "row",
+              alignItems: "center",
               backgroundColor: Colors.white,
               borderRadius: Radii.sm,
-              padding: Spacing[3],
+              paddingHorizontal: Spacing[3],
               marginBottom: Spacing[4],
             }}
-          />
+          >
+            <Ionicons
+              name="search-outline"
+              size={18}
+              color={Colors.muted}
+              style={{ marginRight: Spacing[2] }}
+            />
+
+            <TextInput
+              placeholder="Search"
+              placeholderTextColor={Colors.muted}
+              value={draftSportSearch[sport.id] ?? ""}
+              onChangeText={(text) => setDraftSportSearch(sport.id, text)}
+              style={{
+                flex: 1,
+                paddingVertical: Spacing[3],
+                fontSize: Typography.size.sm,
+                color: Colors.black,
+              }}
+            />
+          </View>
 
           {filteredTournaments.map((league) => {
             const selected = draftSelectedTournamentIds.includes(league.id);
@@ -104,6 +125,10 @@ export default function SportAccordion({ sport }: Props) {
                   justifyContent: "space-between",
                   alignItems: "center",
                   paddingVertical: Spacing[3],
+                  backgroundColor: Colors.white,
+                  borderRadius: Radii.sm,
+                  marginBottom: Spacing[1],
+                  padding: Spacing[2],
                 }}
               >
                 <Text style={{ fontSize: Typography.size.sm }}>
