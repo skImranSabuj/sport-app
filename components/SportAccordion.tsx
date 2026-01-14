@@ -59,7 +59,13 @@ export default function SportAccordion({ sport }: Props) {
           style={{ marginRight: Spacing[2] }}
         />
 
-        <Text style={{ fontSize: Typography.size.md, flex: 1 }}>
+        <Text
+          style={{
+            fontSize: Typography.size.md,
+            flex: 1,
+            fontFamily: "semi-bold-font",
+          }}
+        >
           {sport.sportName}
         </Text>
         {/* Parent Checkbox */}

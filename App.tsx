@@ -12,6 +12,7 @@ const queryClient = new QueryClient();
 export default function App() {
   const [fontsLoaded] = useFonts({
     "bold-font": require("./assets/fonts/Apotek_Regular.otf"),
+    "semi-bold-font": require("./assets/fonts/Inter_SemiBold.ttf"),
   });
   const bottomSheetRef = useRef<BottomSheet>(null);
 

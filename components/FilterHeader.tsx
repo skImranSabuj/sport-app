@@ -36,7 +36,14 @@ export default function FilterHeader({ onPressFilters }: Props) {
   });
 
   return (
-    <View style={{ backgroundColor: Colors.white, paddingBottom: 8 }}>
+    <View
+      style={{
+        backgroundColor: Colors.white,
+        paddingBottom: 8,
+        borderBottomWidth: Spacing[3],
+        borderBottomColor: Colors.border,
+      }}
+    >
       {/* Calendar */}
       <View style={{ paddingHorizontal: 16, paddingTop: 12 }}>
         <Text
@@ -46,7 +53,7 @@ export default function FilterHeader({ onPressFilters }: Props) {
           }}
         >
           {monthYear}{" "}
-          <Entypo name="chevron-thin-down" size={16} color="black" />
+          <Entypo name="chevron-thin-down" size={16} color={Colors.black} />
         </Text>
 
         <WeekCalendar date={date} onChange={setDate} />
@@ -67,7 +74,7 @@ export default function FilterHeader({ onPressFilters }: Props) {
           style={{
             backgroundColor: Colors.primaryLight,
             paddingHorizontal: 14,
-            paddingVertical: 8,
+            paddingVertical: Spacing[1],
             borderRadius: Radii.pill,
             marginRight: 8,
             flexDirection: "row",
@@ -96,7 +103,7 @@ export default function FilterHeader({ onPressFilters }: Props) {
             style={{
               backgroundColor: Colors.primary,
               paddingHorizontal: 14,
-              paddingVertical: 8,
+              paddingVertical: Spacing[1],
               borderRadius: Radii.pill,
             }}
           >
