@@ -99,21 +99,29 @@ const FiltersSheet = forwardRef<FiltersSheetRef>((_, ref) => {
             padding: Spacing[4],
           }}
         >
-          <Text
+          <View
             style={{
-              fontSize: Typography.size.md,
-              color: Colors.primary,
               alignSelf: "flex-end",
+              display: "flex",
+              flexDirection: "row",
             }}
           >
             <FontAwesome
               name="undo"
               size={18}
               color={Colors.primary}
-              style={{ marginRight: Spacing[2] }}
+              style={{ paddingRight: Spacing[2] }}
             />
-            <Text style={{ textDecorationLine: "underline" }}>Reset all</Text>
-          </Text>
+            <Text
+              style={{
+                color: Colors.primary,
+                fontSize: Typography.size.md,
+                textDecorationLine: "underline",
+              }}
+            >
+              Reset all
+            </Text>
+          </View>
         </TouchableOpacity>
 
         {/* Content */}
