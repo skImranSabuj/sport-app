@@ -15,6 +15,7 @@ import {
 import { useSportsAndLeagues } from "../hooks/useSportsAndLeagues";
 import { useFilters } from "../store/filters";
 import { Colors, Radii, Spacing, Typography } from "../theme";
+import { Sport } from "../types/sports";
 import SportAccordion from "./SportAccordion";
 
 export type FiltersSheetRef = {
@@ -136,7 +137,7 @@ const FiltersSheet = forwardRef<FiltersSheetRef>((_, ref) => {
               paddingBottom: Spacing[10],
             }}
           >
-            {sports?.map((sport) => (
+            {sports?.map((sport: Sport) => (
               <SportAccordion key={sport.id} sport={sport} />
             ))}
           </BottomSheetScrollView>

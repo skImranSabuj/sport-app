@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useMemo } from "react";
-import { fetchMatchList } from "../api/matches";
+import { fetchMatchList } from "../api/services/matches";
 import { mapMatch } from "../mappers/matchMapper";
 import { useFilters } from "../store/filters";
 import { Match } from "../types/match";

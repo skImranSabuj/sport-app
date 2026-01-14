@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchSportsAndLeagues } from "../api/sports";
+import { fetchSportsAndLeagues } from "../api/services/sports";
 import { useFilters } from "../store/filters";
 import { buildSportsSearchParam } from "../utils/buildSportsSearch";
 
