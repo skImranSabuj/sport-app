@@ -1,13 +1,13 @@
-import {addDays, format, getDate, isSameDay, startOfWeek} from 'date-fns';
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { addDays, format, getDate, isSameDay, startOfWeek } from "date-fns";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 type Props = {
   date: Date;
   onChange: (value: Date) => void;
 };
 
-const WeekCalendar: React.FC<Props> = ({date, onChange}) => {
+const WeekCalendar: React.FC<Props> = ({ date, onChange }) => {
   const [week, setWeek] = useState<WeekDay[]>([]);
 
   useEffect(() => {
@@ -32,7 +32,8 @@ const WeekCalendar: React.FC<Props> = ({date, onChange}) => {
             <Text style={styles.weekDayText}>{weekDay.formatted}</Text>
             <TouchableOpacity
               onPress={() => onChange(weekDay.date)}
-              style={touchable}>
+              style={touchable}
+            >
               <Text style={textStyles}>{weekDay.day}</Text>
             </TouchableOpacity>
           </View>
@@ -44,21 +45,21 @@ const WeekCalendar: React.FC<Props> = ({date, onChange}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     paddingVertical: 10,
   },
   weekDayText: {
-    color: 'gray',
+    color: "gray",
     marginBottom: 5,
   },
   label: {
     fontSize: 14,
-    color: 'black',
-    textAlign: 'center',
+    color: "black",
+    textAlign: "center",
   },
   selectedLabel: {
-    color: 'white',
+    color: "white",
   },
   touchable: {
     borderRadius: 20,
@@ -67,10 +68,10 @@ const styles = StyleSheet.create({
     width: 35,
   },
   selectedTouchable: {
-    backgroundColor: 'blue',
+    backgroundColor: "blue",
   },
   weekDayItem: {
-    alignItems: 'center',
+    alignItems: "center",
   },
 });
 
@@ -82,14 +83,14 @@ type WeekDay = {
 
 // get week days
 export const getWeekDays = (date: Date): WeekDay[] => {
-  const start = startOfWeek(date, {weekStartsOn: 1});
+  const start = startOfWeek(date, { weekStartsOn: 1 });
 
   const final = [];
 
   for (let i = 0; i < 7; i++) {
     const date = addDays(start, i);
     final.push({
-      formatted: format(date, 'EEE'),
+      formatted: format(date, "EEE"),
       date,
       day: getDate(date),
     });

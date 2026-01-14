@@ -1,12 +1,13 @@
-import { useRef, useState } from 'react';
-import { FlashList } from '@shopify/flash-list';
-import { useMatchList } from '../hooks/useMatchList';
-import MatchCard from '../components/MatchCard';
-import FilterHeader from '../components/FilterHeader';
-import FiltersSheet, { FiltersSheetRef } from '../components/FiltersSheet';
-import LoadingFooter from '../components/LoadingFooter';
-import EmptyState from '../components/EmptyState';
-import ErrorState from '../components/ErrorState';
+import { FlashList } from "@shopify/flash-list";
+import { useRef } from "react";
+import EmptyState from "../components/EmptyState";
+import ErrorState from "../components/ErrorState";
+import FilterHeader from "../components/FilterHeader";
+import FiltersSheet, { FiltersSheetRef } from "../components/FiltersSheet";
+import LoadingFooter from "../components/LoadingFooter";
+import MatchCard from "../components/MatchCard";
+import Separator from "../components/Separator";
+import { useMatchList } from "../hooks/useMatchList";
 
 export default function MatchListScreen() {
   const sheetRef = useRef<FiltersSheetRef>(null);
@@ -32,13 +33,16 @@ export default function MatchListScreen() {
         renderItem={({ item }) => <MatchCard match={item} />}
         onEndReached={() => hasNextPage && fetchNextPage()}
         onEndReachedThreshold={0.5}
-        ListHeaderComponent={() => <FilterHeader onPressFilters={() => sheetRef.current?.open()} />}
+        ListHeaderComponent={() => (
+          <FilterHeader onPressFilters={() => sheetRef.current?.open()} />
+        )}
         ListEmptyComponent={<EmptyState variant="empty" />}
         ListFooterComponent={<LoadingFooter visible={isFetchingNextPage} />}
         showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={() => <Separator />}
       />
 
-      {/* <FiltersSheet ref={sheetRef} /> */}
+      <FiltersSheet ref={sheetRef} />
     </>
   );
 }
