@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    fontSize: Typography.size.xs,
+    fontSize: Typography.size.md,
     color: Colors.black,
     textAlign: "center",
   },

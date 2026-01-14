@@ -50,6 +50,7 @@ export default function FilterHeader({ onPressFilters }: Props) {
           style={{
             fontSize: Typography.size.md,
             textAlign: "center",
+            fontFamily: "semi-bold-font",
           }}
         >
           {monthYear}{" "}
