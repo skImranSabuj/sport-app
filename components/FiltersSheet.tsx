@@ -1,3 +1,4 @@
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetScrollView,
@@ -7,7 +8,6 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   Text,
   TouchableOpacity,
   View,
@@ -27,14 +27,7 @@ const FiltersSheet = forwardRef<FiltersSheetRef>((_, ref) => {
 
   const snapPoints = useMemo(() => ["50%", "85%"], []);
 
-  const {
-    draftSelectedTournamentIds,
-    draftSportSearch,
-    toggleDraftTournament,
-    setDraftSportSearch,
-    apply,
-    reset,
-  } = useFilters();
+  const { apply, reset } = useFilters();
 
   const { data: sports, isFetching } = useSportsAndLeagues();
 
@@ -58,35 +51,70 @@ const FiltersSheet = forwardRef<FiltersSheetRef>((_, ref) => {
       snapPoints={snapPoints}
       enablePanDownToClose
       backdropComponent={BottomSheetBackdrop}
+      backgroundStyle={{ backgroundColor: Colors.black }}
+      handleIndicatorStyle={{
+        borderWidth: 0,
+        backgroundColor: Colors.primaryLight,
+      }}
     >
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
-        style={{ flex: 1 }}
+        style={{ flex: 1, backgroundColor: Colors.white }}
       >
         {/* Header */}
         <View
           style={{
             padding: Spacing[4],
-            borderBottomWidth: 1,
-            borderBottomColor: Colors.border,
+            backgroundColor: Colors.black,
           }}
         >
-          <Text style={{ fontSize: Typography.size.xl }}>FILTERS</Text>
+          <Text
+            style={{
+              fontFamily: "bold-font",
+              fontSize: Typography.size.xl,
+              color: Colors.primaryLight,
+            }}
+          >
+            FILTERS
+          </Text>
 
-          <Pressable
-            onPress={reset}
+          <TouchableOpacity
+            onPress={() => handleCollapse()}
             style={{ position: "absolute", right: Spacing[4], top: Spacing[4] }}
           >
-            <Text
-              style={{
-                fontSize: Typography.size.sm,
-                color: Colors.primary,
-              }}
-            >
-              Reset all
-            </Text>
-          </Pressable>
+            <FontAwesome
+              name="close"
+              size={24}
+              color={Colors.primaryLight}
+              style={{ marginRight: Spacing[2] }}
+            />
+          </TouchableOpacity>
         </View>
+
+        <TouchableOpacity
+          onPress={reset}
+          style={{
+            borderBottomWidth: 1,
+            borderColor: Colors.border,
+            padding: Spacing[4],
+          }}
+        >
+          <Text
+            style={{
+              fontSize: Typography.size.md,
+              color: Colors.primary,
+              alignSelf: "flex-end",
+            }}
+          >
+            <FontAwesome
+              name="undo"
+              size={18}
+              color={Colors.primary}
+              style={{ marginRight: Spacing[2] }}
+            />
+            <Text style={{ textDecorationLine: "underline" }}>Reset all</Text>
+          </Text>
+        </TouchableOpacity>
 
         {/* Content */}
         {isFetching ? (
