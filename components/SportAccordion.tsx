@@ -1,5 +1,5 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { useFilters } from "../store/filters";
 import { Colors, Radii, Spacing, Typography } from "../theme";
@@ -23,6 +23,16 @@ export default function SportAccordion({ sport }: Props) {
   const isSportSelected = sport.tournaments.some((t) =>
     draftSelectedTournamentIds.includes(t.id)
   );
+
+  // Filter leagues locally based on search input
+  const filteredTournaments = useMemo(() => {
+    const search = draftSportSearch[sport.id]?.toLowerCase() || "";
+    if (!search) return sport.tournaments;
+
+    return sport.tournaments.filter((t) =>
+      t.name.toLowerCase().includes(search)
+    );
+  }, [draftSportSearch[sport.id], sport.tournaments]);
 
   return (
     <View
@@ -76,7 +86,7 @@ export default function SportAccordion({ sport }: Props) {
             }}
           />
 
-          {sport.tournaments.map((league) => {
+          {filteredTournaments.map((league) => {
             const selected = draftSelectedTournamentIds.includes(league.id);
 
             return (
