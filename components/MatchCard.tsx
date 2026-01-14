@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from "react";
+import React, { memo, useEffect, useMemo } from "react";
 import { Text, View } from "react-native";
 import { useCountdown } from "../hooks/useCountDown";
 import { Colors, Spacing, Typography } from "../theme";
@@ -21,6 +21,10 @@ function MatchCard({ match }: Props) {
 
     return { label: formatTime };
   }, [startMs, countdown?.label]);
+
+  useEffect(() => {
+    console.log({ match });
+  }, []);
 
   return (
     <View
@@ -65,7 +69,7 @@ function MatchCard({ match }: Props) {
           >
             {countdown.label}
           </Text>
-          {match.hasTips && (
+          {/* {match.hasTips && (
             <View
               style={{
                 marginTop: 4,
@@ -77,7 +81,7 @@ function MatchCard({ match }: Props) {
             >
               <Text style={{ fontSize: 11, color: "#2F6BFF" }}>Tips</Text>
             </View>
-          )}
+          )} */}
         </View>
 
         <Team name={match.awayTeam} logo={match.awayLogo} />

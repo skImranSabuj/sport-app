@@ -12,6 +12,10 @@ import { useMatchList } from "../hooks/useMatchList";
 export default function MatchListScreen() {
   const sheetRef = useRef<FiltersSheetRef>(null);
 
+  const Header = () => (
+    <FilterHeader onPressFilters={() => sheetRef.current?.open()} />
+  );
+
   const {
     data,
     isLoading,
@@ -33,9 +37,7 @@ export default function MatchListScreen() {
         renderItem={({ item }) => <MatchCard match={item} />}
         onEndReached={() => hasNextPage && fetchNextPage()}
         onEndReachedThreshold={0.5}
-        ListHeaderComponent={() => (
-          <FilterHeader onPressFilters={() => sheetRef.current?.open()} />
-        )}
+        ListHeaderComponent={Header}
         ListEmptyComponent={<EmptyState variant="empty" />}
         ListFooterComponent={<LoadingFooter visible={isFetchingNextPage} />}
         showsVerticalScrollIndicator={false}
