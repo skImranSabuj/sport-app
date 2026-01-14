@@ -21,6 +21,7 @@ function MatchCard({ match }: Props) {
 
     return { label: formatTime };
   }, [startMs, countdown?.label]);
+  console.log(countdown.label);
 
   useEffect(() => {
     console.log({ match });

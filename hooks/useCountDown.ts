@@ -1,41 +1,76 @@
 import { useEffect, useState } from "react";
 
-export type CountdownState =
-  | { type: "upcoming"; label: string; now: any }
-  | { type: "live"; label: string; now: any };
+export type CountdownType = "live" | "upcoming";
 
-function format(ms: number) {
-  const totalSec = Math.max(0, Math.floor(ms / 1000));
-  const h = Math.floor(totalSec / 3600);
-  const m = Math.floor((totalSec % 3600) / 60);
-  const s = totalSec % 60;
+export type Countdown = {
+  label: string;
+  type: CountdownType;
+  now: number;
+};
 
-  if (h > 0) return `${h}h ${m}m`;
-  if (m > 0) return `${m}m ${s}s`;
-  return `${s}s`;
-}
-
-export function useCountdown(startTimeISO: string) {
+export function useCountdown(startTimeISO: string): Countdown {
   const startMs = new Date(startTimeISO).getTime();
   const [now, setNow] = useState(() => Date.now());
 
+  /**
+   * Smooth shared timer (1 tick per second)
+   * Using setInterval is better than RAF for timers
+   */
   useEffect(() => {
-    const id = setInterval(() => {
+    const interval = setInterval(() => {
       setNow(Date.now());
     }, 1000);
 
-    return () => clearInterval(id);
+    return () => clearInterval(interval);
   }, []);
 
   const diff = startMs - now;
 
+  // ---------------- LIVE ----------------
   if (diff <= 0) {
-    return { type: "live", label: "LIVE" } as CountdownState;
+    return {
+      label: "",
+      type: "live",
+      now,
+    };
+  }
+
+  const totalSeconds = Math.floor(diff / 1000);
+  const totalMinutes = Math.floor(totalSeconds / 60);
+  const totalHours = Math.floor(totalMinutes / 60);
+
+  // ---------------- > 24 HOURS ----------------
+  if (totalHours >= 24) {
+    const date = new Date(startMs);
+    const label = `${date.getDate()}/${date.getMonth() + 1}`;
+
+    return {
+      label,
+      type: "upcoming",
+      now,
+    };
+  }
+
+  // ---------------- < 24 HOURS ----------------
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  let label = "";
+
+  if (hours > 0) {
+    label = `${hours.toString().padStart(2, "0")}h ${minutes
+      .toString()
+      .padStart(2, "0")}m ${seconds.toString().padStart(2, "0")}s`;
+  } else {
+    label = `${minutes.toString().padStart(2, "0")}m ${seconds
+      .toString()
+      .padStart(2, "0")}s`;
   }
 
   return {
+    label,
     type: "upcoming",
-    label: format(diff),
     now,
-  } as CountdownState;
+  };
 }

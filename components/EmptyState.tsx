@@ -6,7 +6,14 @@ export default function EmptyState({
   variant: "loading" | "empty";
 }) {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        paddingVertical: 40,
+      }}
+    >
       <Text>{variant === "loading" ? "Loading..." : "No matches found"}</Text>
     </View>
   );
