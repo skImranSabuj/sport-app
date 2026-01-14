@@ -6,7 +6,7 @@ function Separator() {
     <View
       style={{
         borderBottomWidth: 1,
-        marginHorizontal: Spacing.lg,
+        marginHorizontal: Spacing[4],
         borderColor: Colors.border,
       }}
     />

@@ -58,8 +58,8 @@ export default function FilterHeader({ onPressFilters }: Props) {
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
-          paddingHorizontal: Spacing.lg,
-          paddingTop: Spacing.sm,
+          paddingHorizontal: Spacing[4],
+          paddingTop: Spacing[2],
         }}
       >
         {/* Open Filters */}

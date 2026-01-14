@@ -13,7 +13,7 @@ export default function MatchListScreen() {
   const sheetRef = useRef<FiltersSheetRef>(null);
 
   const Header = () => (
-    <FilterHeader onPressFilters={() => sheetRef.current?.open()} />
+    <FilterHeader onPressFilters={() => sheetRef.current?.expand()} />
   );
 
   const {

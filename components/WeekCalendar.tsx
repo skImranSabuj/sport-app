@@ -1,6 +1,7 @@
 import { addDays, format, getDate, isSameDay, startOfWeek } from "date-fns";
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Colors, Radii, Spacing, Typography } from "../theme";
 
 type Props = {
   date: Date;
@@ -8,33 +9,25 @@ type Props = {
 };
 
 const WeekCalendar: React.FC<Props> = ({ date, onChange }) => {
-  const [week, setWeek] = useState<WeekDay[]>([]);
-
-  useEffect(() => {
-    const weekDays = getWeekDays(date);
-    setWeek(weekDays);
-  }, [date]);
+  const week = useMemo(() => getWeekDays(date), [date]);
 
   return (
     <View style={styles.container}>
       {week.map((weekDay) => {
-        const textStyles = [styles.label];
-        const touchable = [styles.touchable];
-
-        const sameDay = isSameDay(weekDay.date, date);
-        if (sameDay) {
-          textStyles.push(styles.selectedLabel);
-          touchable.push(styles.selectedTouchable);
-        }
+        const isSelected = isSameDay(weekDay.date, date);
 
         return (
-          <View style={styles.weekDayItem} key={weekDay.formatted}>
+          <View key={weekDay.formatted} style={styles.weekDayItem}>
             <Text style={styles.weekDayText}>{weekDay.formatted}</Text>
+
             <TouchableOpacity
               onPress={() => onChange(weekDay.date)}
-              style={touchable}
+              style={[styles.touchable, isSelected && styles.selectedTouchable]}
+              activeOpacity={0.7}
             >
-              <Text style={textStyles}>{weekDay.day}</Text>
+              <Text style={[styles.label, isSelected && styles.selectedLabel]}>
+                {weekDay.day}
+              </Text>
             </TouchableOpacity>
           </View>
         );
@@ -46,32 +39,41 @@ const WeekCalendar: React.FC<Props> = ({ date, onChange }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    paddingVertical: 10,
+    justifyContent: "space-between",
+    paddingVertical: Spacing[2],
   },
+
+  weekDayItem: {
+    alignItems: "center",
+    flex: 1,
+  },
+
   weekDayText: {
     color: "gray",
     marginBottom: 5,
+    fontSize: Typography.size.xs,
   },
+
+  touchable: {
+    height: Spacing[6],
+    width: Spacing[6],
+    borderRadius: Radii.pill,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  selectedTouchable: {
+    backgroundColor: Colors.primary,
+  },
+
   label: {
-    fontSize: 14,
-    color: "black",
+    fontSize: Typography.size.xs,
+    color: Colors.black,
     textAlign: "center",
   },
+
   selectedLabel: {
-    color: "white",
-  },
-  touchable: {
-    borderRadius: 20,
-    padding: 7.5,
-    height: 35,
-    width: 35,
-  },
-  selectedTouchable: {
-    backgroundColor: "blue",
-  },
-  weekDayItem: {
-    alignItems: "center",
+    color: Colors.white,
   },
 });
 
@@ -81,22 +83,21 @@ type WeekDay = {
   day: number;
 };
 
-// get week days
+// ─────────────────────────────────────────────
+// Helpers
+// ─────────────────────────────────────────────
+
 export const getWeekDays = (date: Date): WeekDay[] => {
   const start = startOfWeek(date, { weekStartsOn: 1 });
 
-  const final = [];
-
-  for (let i = 0; i < 7; i++) {
-    const date = addDays(start, i);
-    final.push({
-      formatted: format(date, "EEE"),
-      date,
-      day: getDate(date),
-    });
-  }
-
-  return final;
+  return Array.from({ length: 7 }).map((_, i) => {
+    const d = addDays(start, i);
+    return {
+      formatted: format(d, "EEE"),
+      date: d,
+      day: getDate(d),
+    };
+  });
 };
 
 export default WeekCalendar;

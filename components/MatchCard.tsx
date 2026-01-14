@@ -30,8 +30,8 @@ function MatchCard({ match }: Props) {
     <View
       style={{
         backgroundColor: Colors.card,
-        marginHorizontal: Spacing.lg,
-        marginVertical: Spacing.sm,
+        marginHorizontal: Spacing[4],
+        marginVertical: Spacing[2],
       }}
     >
       {/* Teams */}
@@ -40,7 +40,7 @@ function MatchCard({ match }: Props) {
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
-          marginTop: Spacing.sm,
+          marginTop: Spacing[2],
         }}
       >
         <Team name={match.homeTeam} logo={match.homeLogo} />
