@@ -37,7 +37,7 @@ const FiltersSheet = forwardRef<FiltersSheetRef>((_, ref) => {
   }, []);
 
   const handleCollapse = useCallback(() => {
-    sheetRef.current?.collapse();
+    sheetRef.current?.close();
   }, []);
 
   React.useImperativeHandle(ref, () => ({
