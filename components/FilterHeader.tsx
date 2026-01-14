@@ -1,6 +1,6 @@
 import Entypo from "@expo/vector-icons/Entypo";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { useSportsAndLeagues } from "../hooks/useSportsAndLeagues";
 import { useFilters } from "../store/filters";
@@ -12,9 +12,13 @@ type Props = {
 };
 
 export default function FilterHeader({ onPressFilters }: Props) {
-  const [date, setDate] = useState(new Date());
-
-  const { selectedTournamentIds, removeTournament } = useFilters();
+  const {
+    selectedTournamentIds,
+    removeTournament,
+    selectedDate,
+    setSelectedDate,
+    clearDate,
+  } = useFilters();
   const { data: sports } = useSportsAndLeagues();
 
   const selectedChips = useMemo(() => {
@@ -30,7 +34,7 @@ export default function FilterHeader({ onPressFilters }: Props) {
     );
   }, [sports, selectedTournamentIds]);
 
-  const monthYear = date.toLocaleDateString("en-US", {
+  const monthYear = (selectedDate || new Date()).toLocaleDateString("en-US", {
     month: "long",
     year: "numeric",
   });
@@ -57,7 +61,20 @@ export default function FilterHeader({ onPressFilters }: Props) {
           <Entypo name="chevron-thin-down" size={16} color={Colors.black} />
         </Text>
 
-        <WeekCalendar date={date} onChange={setDate} />
+        {/* <WeekCalendar date={selectedDate} onChange={setSelectedDate} /> */}
+        <WeekCalendar
+          date={selectedDate ?? new Date()}
+          onChange={(date) => {
+            if (
+              selectedDate &&
+              date.toDateString() === selectedDate.toDateString()
+            ) {
+              clearDate();
+            } else {
+              setSelectedDate(date);
+            }
+          }}
+        />
       </View>
 
       {/* Filters */}

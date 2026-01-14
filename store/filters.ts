@@ -17,6 +17,10 @@ type FiltersState = {
 
   apply: () => void;
   reset: () => void;
+
+  selectedDate: Date | null;
+  setSelectedDate: (date: Date | null) => void;
+  clearDate: () => void;
 };
 
 export const useFilters = create<FiltersState>((set) => ({
@@ -64,4 +68,8 @@ export const useFilters = create<FiltersState>((set) => ({
       draftSelectedTournamentIds: [],
       draftSportSearch: {},
     }),
+
+  selectedDate: new Date(),
+  setSelectedDate: (date) => set({ selectedDate: date }),
+  clearDate: () => set({ selectedDate: null }),
 }));

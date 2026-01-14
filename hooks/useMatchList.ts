@@ -1,14 +1,13 @@
-// hooks/useMatchList.ts
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
 import { useMemo } from "react";
 import { fetchMatchList } from "../api/matches";
-// import { mapMatch } from "../mappers/matchMapper";
 import { mapMatch } from "../mappers/matchMapper";
 import { useFilters } from "../store/filters";
 import { Match } from "../types/match";
 
 const PAGE_SIZE = 10;
-const TIMEZONE = "Australia/Sydney";
+const TIMEZONE = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 type ApiResponse = {
   status: boolean;
@@ -17,14 +16,16 @@ type ApiResponse = {
 };
 
 export function useMatchList() {
-  const { selectedTournamentIds } = useFilters();
+  const { selectedTournamentIds, selectedDate } = useFilters();
   const tournamentParam =
     selectedTournamentIds.length > 0
       ? selectedTournamentIds.join(",")
       : undefined;
 
+  const todate = selectedDate ? format(selectedDate, "yyyy-MM-dd") : undefined;
+
   const query = useInfiniteQuery<ApiResponse>({
-    queryKey: ["matches", tournamentParam, TIMEZONE],
+    queryKey: ["matches", tournamentParam, TIMEZONE, todate],
     queryFn: ({ pageParam = 0 }) =>
       fetchMatchList({
         timezone: TIMEZONE,
@@ -32,6 +33,7 @@ export function useMatchList() {
         tournament_ids: tournamentParam,
         limit: PAGE_SIZE,
         offset: pageParam as number,
+        ...(todate ? { todate } : {}),
       }),
     getNextPageParam: (lastPage, allPages) => {
       const loaded = allPages.reduce(

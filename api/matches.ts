@@ -1,11 +1,9 @@
-import { ApiResponse, Match } from "../types/match";
-
-// api/matches.ts
-type MatchListResponse = Match[]; // adjust if actual shape differs
+import { ApiResponse } from "../types/match";
 
 export async function fetchMatchList(params: {
   timezone: string;
   status?: string;
+  todate?: string;
   tournament_ids?: string;
   limit?: number;
   offset?: number;
