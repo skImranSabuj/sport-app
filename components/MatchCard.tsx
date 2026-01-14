@@ -27,10 +27,10 @@ function MatchCard({ match }: Props) {
       style={{
         backgroundColor: '#FFF',
         borderRadius: 14,
-        borderWidth: 1,
+        borderBottomWidth: 2,
         borderColor: '#EEE',
         paddingVertical: 12,
-        paddingHorizontal: 16,
+        // paddingHorizontal: 16,
         marginHorizontal: 16,
         marginVertical: 6,
       }}
@@ -45,7 +45,7 @@ function MatchCard({ match }: Props) {
           marginBottom: 6,
         }}
       >
-        {match.sportName}
+        {match.sportName?.toUpperCase()}
       </Text>
 
       {/* Teams row */}
@@ -69,8 +69,8 @@ function MatchCard({ match }: Props) {
         </View>
 
         {/* Time */}
-        <View style={{ alignItems: 'center', width: 80 }}>
-          <Text style={{ fontFamily: 'bold-font', fontSize: 20, fontWeight:'700' }}>
+        <View style={{ alignItems: 'center', width: 100 }}>
+          <Text style={{ fontFamily: 'bold-font', fontSize: 18, fontWeight:'700', }}>
             {startTime}
           </Text>
 
