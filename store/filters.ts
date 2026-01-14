@@ -11,6 +11,8 @@ type FiltersState = {
 
   // Actions
   toggleDraftTournament: (id: number) => void;
+  removeTournament: (id: number) => void;
+
   setDraftSportSearch: (sportId: number, text: string) => void;
 
   apply: () => void;
@@ -29,6 +31,16 @@ export const useFilters = create<FiltersState>((set) => ({
       draftSelectedTournamentIds: state.draftSelectedTournamentIds.includes(id)
         ? state.draftSelectedTournamentIds.filter((x) => x !== id)
         : [...state.draftSelectedTournamentIds, id],
+    })),
+
+  removeTournament: (id) =>
+    set((state) => ({
+      selectedTournamentIds: state.selectedTournamentIds.filter(
+        (t) => t !== id
+      ),
+      draftSelectedTournamentIds: state.draftSelectedTournamentIds.filter(
+        (t) => t !== id
+      ),
     })),
 
   setDraftSportSearch: (sportId, text) =>

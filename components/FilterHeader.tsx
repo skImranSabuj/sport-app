@@ -1,8 +1,11 @@
 import Entypo from "@expo/vector-icons/Entypo";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
+import { useSportsAndLeagues } from "../hooks/useSportsAndLeagues";
+import { useFilters } from "../store/filters";
+import { Colors, Radii, Spacing, Typography } from "../theme";
 import WeekCalendar from "./WeekCalendar";
 
 type Props = {
@@ -12,63 +15,123 @@ type Props = {
 export default function FilterHeader({ onPressFilters }: Props) {
   const [date, setDate] = useState(new Date());
 
-  // Format month + year from state
+  const { selectedTournamentIds, removeTournament } = useFilters();
+  const { data: sports } = useSportsAndLeagues();
+
+  const selectedChips = useMemo(() => {
+    if (!sports || selectedTournamentIds.length === 0) return [];
+
+    return sports.flatMap((sport) =>
+      sport.tournaments
+        .filter((t) => selectedTournamentIds.includes(t.id))
+        .map((t) => ({
+          id: t.id,
+          label: t.name,
+        }))
+    );
+  }, [sports, selectedTournamentIds]);
+
   const monthYear = date.toLocaleDateString("en-US", {
     month: "long",
     year: "numeric",
   });
 
   return (
-    <View style={{ backgroundColor: "#FFF", paddingBottom: 8 }}>
-      {/* Calendar row (simplified for now) */}
+    <View style={{ backgroundColor: Colors.white, paddingBottom: 8 }}>
+      {/* Calendar */}
       <View style={{ paddingHorizontal: 16, paddingTop: 12 }}>
-        <Text style={{ fontSize: 16, fontWeight: "700", textAlign: "center" }}>
+        <Text
+          style={{
+            fontSize: Typography.size.md,
+            textAlign: "center",
+          }}
+        >
           {monthYear}{" "}
-          <Entypo name="chevron-thin-down" size={18} color="black" />
+          <Entypo name="chevron-thin-down" size={16} color="black" />
         </Text>
-        <WeekCalendar date={date} onChange={(newDate) => setDate(newDate)} />
+
+        <WeekCalendar date={date} onChange={setDate} />
       </View>
 
-      {/* Filters row */}
+      {/* Filters */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 10 }}
+        contentContainerStyle={{
+          paddingHorizontal: Spacing.lg,
+          paddingTop: Spacing.sm,
+        }}
       >
+        {/* Open Filters */}
         <Pressable
           onPress={onPressFilters}
           style={{
-            backgroundColor: "#EEF1FF",
+            backgroundColor: Colors.primaryLight,
             paddingHorizontal: 14,
             paddingVertical: 8,
-            borderRadius: 18,
+            borderRadius: Radii.pill,
             marginRight: 8,
+            flexDirection: "row",
+            alignItems: "center",
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: "600", color: "#3B4CCA" }}>
-            Filters{" "}
-            <MaterialCommunityIcons
-              name="filter-variant"
-              size={18}
-              color="black"
-            />
+          <Text
+            style={{
+              fontSize: Typography.size.sm,
+              color: Colors.primary,
+              marginRight: 4,
+            }}
+          >
+            Filters
           </Text>
+          <MaterialCommunityIcons
+            name="filter-variant"
+            size={16}
+            color={Colors.primary}
+          />
         </Pressable>
 
-        {["All", "Australian Rules", "Rugby League"].map((item) => (
+        {/* All */}
+        {selectedChips.length === 0 && (
           <View
-            key={item}
             style={{
-              backgroundColor: "blue",
+              backgroundColor: Colors.primary,
               paddingHorizontal: 14,
               paddingVertical: 8,
-              borderRadius: 18,
+              borderRadius: Radii.pill,
+            }}
+          >
+            <Text style={{ fontSize: 13, color: Colors.white }}>All</Text>
+          </View>
+        )}
+
+        {/* Active filters */}
+        {selectedChips.map((chip) => (
+          <View
+            key={chip.id}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              backgroundColor: Colors.primary,
+              paddingHorizontal: 12,
+              paddingVertical: 8,
+              borderRadius: Radii.pill,
               marginRight: 8,
             }}
           >
-            <Text style={{ fontSize: 13, color: "white" }}>
-              {item} <Ionicons name="close-circle" size={16} color="white" />
+            <Text
+              style={{
+                fontSize: Typography.size.sm,
+                color: Colors.white,
+                marginRight: 6,
+              }}
+            >
+              {chip.label}
             </Text>
+
+            <Pressable onPress={() => removeTournament(chip.id)}>
+              <Ionicons name="close-circle" size={16} color={Colors.white} />
+            </Pressable>
           </View>
         ))}
       </ScrollView>
