@@ -6,6 +6,7 @@ import React, { useRef } from "react";
 import { StatusBar } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import MatchListScreen from "./screens/MatchScreen";
+import { Colors } from "./theme";
 
 const queryClient = new QueryClient();
 
@@ -20,7 +21,7 @@ export default function App() {
   if (!fontsLoaded) return null;
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1, backgroundColor: Colors.white }}>
       <QueryClientProvider client={queryClient}>
         <StatusBar barStyle="dark-content" />
         <MatchListScreen />

@@ -61,6 +61,8 @@ function MatchCard({ match }: Props) {
             style={{
               fontSize: Typography.size.lg,
               color: countdown.type === "live" ? Colors.danger : Colors.black,
+              width: 100,
+              textAlign: "center",
             }}
           >
             {countdown.label}

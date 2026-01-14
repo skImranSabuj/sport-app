@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b1480ecd-f4df-467b-830f-4736c0819955"
+      }
+    },
+    "owner": "skimransabuj"
   }
 }
