@@ -1,5 +1,4 @@
-import { ApiResponse, Match, SportWithTournaments } from "../types/match";
-import { get } from "./http";
+import { ApiResponse, Match } from "../types/match";
 
 // api/matches.ts
 type MatchListResponse = Match[]; // adjust if actual shape differs
@@ -11,7 +10,9 @@ export async function fetchMatchList(params: {
   limit?: number;
   offset?: number;
 }): Promise<ApiResponse> {
-  const url = new URL("https://smartb.com.au/soc-api/sports/matchList");
+  const url = new URL(
+    process.env.EXPO_PUBLIC_API_BASE_URL + "/sports/matchList"
+  );
   Object.entries(params).forEach(([k, v]) => {
     if (v !== undefined) url.searchParams.append(k, String(v));
   });
@@ -19,21 +20,4 @@ export async function fetchMatchList(params: {
   const res = await fetch(url.toString());
   if (!res.ok) throw new Error("Network error");
   return res.json() as Promise<ApiResponse>; // ✅ returns full object
-}
-
-// api/sports.ts
-export async function fetchAllSportsAndLeagues({
-  search,
-  limit = 10,
-  offset = 0,
-}: {
-  search?: string;
-  limit?: number;
-  offset?: number;
-}) {
-  return get<SportWithTournaments[]>("sports/AllSportsAndLeagues", {
-    search: search ?? "",
-    limit,
-    offset,
-  });
 }

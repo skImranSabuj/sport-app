@@ -7,7 +7,7 @@ import { mapMatch } from "../mappers/matchMapper";
 import { useFilters } from "../store/filters";
 import { Match } from "../types/match";
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 10;
 const TIMEZONE = "Australia/Sydney";
 
 type ApiResponse = {

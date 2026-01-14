@@ -1,6 +1,6 @@
 import { Match } from "../types/match";
 
-const BASE_URL = process.env.MEDIA_SERVER || "https://media.smartb.com.au/";
+const BASE_URL = process.env.EXPO_PUBLIC_MEDIA_SERVER + "/";
 
 export function mapMatch(api: any): Match {
   return {
