@@ -1,8 +1,7 @@
 import Entypo from "@expo/vector-icons/Entypo";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import React, { useMemo, useState } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { useSportsAndLeagues } from "../hooks/useSportsAndLeagues";
 import { useFilters } from "../store/filters";
 import { Colors, Radii, Spacing, Typography } from "../theme";
@@ -84,10 +83,10 @@ export default function FilterHeader({ onPressFilters }: Props) {
           >
             Filters
           </Text>
-          <MaterialCommunityIcons
-            name="filter-variant"
-            size={16}
-            color={Colors.primary}
+          <Image
+            source={require("../assets/icons/filter-icon.png")}
+            style={{ height: 20, width: 20 }}
+            tintColor={Colors.black}
           />
         </Pressable>
 
