@@ -1,9 +1,7 @@
-// App.tsx
-import BottomSheet from "@gorhom/bottom-sheet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
-import React, { useRef } from "react";
-import { StatusBar } from "react-native";
+import React from "react";
+import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import MatchListScreen from "./screens/MatchScreen";
 import { Colors } from "./theme";
@@ -12,20 +10,37 @@ const queryClient = new QueryClient();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    "bold-font": require("./assets/fonts/fonnts.com-Apotek_Comp_Regular.otf"),
-    // "bold-font": require("./assets/fonts/Apotek-Regular.otf"),
+    "bold-font": require("./assets/fonts/Apotek-Regular.ttf"),
     "semi-bold-font": require("./assets/fonts/Inter-SemiBold.ttf"),
   });
-  const bottomSheetRef = useRef<BottomSheet>(null);
 
   if (!fontsLoaded) return null;
 
   return (
-    <GestureHandlerRootView style={{ flex: 1, backgroundColor: Colors.white }}>
+    <GestureHandlerRootView style={styles.root}>
       <QueryClientProvider client={queryClient}>
-        <StatusBar barStyle="dark-content" />
-        <MatchListScreen />
+        <StatusBar barStyle="dark-content" backgroundColor={Colors.white} />
+        <View style={styles.container}>
+          <MatchListScreen />
+        </View>
       </QueryClientProvider>
     </GestureHandlerRootView>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    backgroundColor: Colors.white,
+  },
+
+  safeArea: {
+    flex: 1,
+    backgroundColor: Colors.white,
+  },
+
+  container: {
+    flex: 1,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
+});
