@@ -63,7 +63,7 @@ export default function FilterHeader({ onPressFilters }: Props) {
 
         {/* <WeekCalendar date={selectedDate} onChange={setSelectedDate} /> */}
         <WeekCalendar
-          date={selectedDate ?? new Date()}
+          date={selectedDate}
           onChange={(date) => {
             if (
               selectedDate &&

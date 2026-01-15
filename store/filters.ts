@@ -67,9 +67,10 @@ export const useFilters = create<FiltersState>((set) => ({
       appliedSportSearch: {},
       draftSelectedTournamentIds: [],
       draftSportSearch: {},
+      selectedDate: null,
     }),
 
-  selectedDate: new Date(),
+  selectedDate: null,
   setSelectedDate: (date) => set({ selectedDate: date }),
   clearDate: () => set({ selectedDate: null }),
 }));
