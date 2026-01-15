@@ -71,7 +71,7 @@ const FiltersSheet = forwardRef<FiltersSheetRef>((_, ref) => {
         >
           <Text
             style={{
-              fontFamily: "bold-font",
+              fontFamily: "boldFont",
               fontSize: Typography.size.xl,
               color: Colors.primaryLight,
             }}

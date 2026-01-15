@@ -10,8 +10,8 @@ const queryClient = new QueryClient();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    "bold-font": require("./assets/fonts/Apotek-Regular.ttf"),
-    "semi-bold-font": require("./assets/fonts/Inter-SemiBold.ttf"),
+    boldFont: require("./assets/fonts/Apotek-Regular.ttf"),
+    mediumFont: require("./assets/fonts/Inter-SemiBold.ttf"),
   });
 
   if (!fontsLoaded) return null;

@@ -53,7 +53,7 @@ function MatchCard({ match }: Props) {
             {match.tournamentName}
           </Text>
           <Text
-            style={{ fontFamily: "bold-font", fontSize: 24, fontWeight: "700" }}
+            style={{ fontFamily: "boldFont", fontSize: 24, fontWeight: "700" }}
           >
             {startTime}
           </Text>

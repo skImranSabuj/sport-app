@@ -63,7 +63,7 @@ export default function SportAccordion({ sport }: Props) {
           style={{
             fontSize: Typography.size.md,
             flex: 1,
-            fontFamily: "semi-bold-font",
+            fontFamily: "mediumFont",
           }}
         >
           {sport.sportName}
